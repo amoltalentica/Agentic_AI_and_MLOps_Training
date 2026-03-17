@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cnn-classifier
+  namespace: cnn-classifier
+  labels:
+    app: cnn-classifier
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cnn-classifier
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: cnn-classifier
+    spec:
+      containers:
+        - name: cnn-classifier
+          # Image is built locally inside Minikube's Docker daemon.
+          # Run: eval $(minikube docker-env)
+          #      docker build -t cnn-classifier:latest .
+          image: cnn-classifier:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+              name: http
+          env:
+            - name: MLFLOW_TRACKING_URI
+              valueFrom:
+                secretKeyRef:
+                  name: cnn-classifier-secrets
+                  key: MLFLOW_TRACKING_URI
+          resources:
+            requests:
+              memory: "2Gi"
+              cpu: "500m"
+            limits:
+              memory: "4Gi"
+              cpu: "1500m"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 90
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 15
+            timeoutSeconds: 10
+            failureThreshold: 3
+          volumeMounts:
+            - name: artifacts-storage
+              mountPath: /app/artifacts
+            - name: logs-storage
+              mountPath: /app/logs
+      volumes:
+        - name: artifacts-storage
+          persistentVolumeClaim:
+            claimName: artifacts-pvc
+        - name: logs-storage
+          emptyDir: {}

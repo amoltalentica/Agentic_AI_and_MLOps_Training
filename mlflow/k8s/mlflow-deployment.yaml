@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlflow-server
+  namespace: cnn-classifier
+  labels:
+    app: mlflow-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mlflow-server
+  template:
+    metadata:
+      labels:
+        app: mlflow-server
+    spec:
+      containers:
+        - name: mlflow-server
+          image: ghcr.io/mlflow/mlflow:v2.2.2
+          imagePullPolicy: IfNotPresent
+          args:
+            - mlflow
+            - server
+            - --backend-store-uri
+            - /mlflow/mlruns
+            - --default-artifact-root
+            - /mlflow/artifacts
+            - --host
+            - "0.0.0.0"
+            - --port
+            - "5000"
+          env:
+            # Single worker + longer gunicorn timeout to avoid WORKER TIMEOUT in
+            # constrained Minikube environments
+            - name: GUNICORN_CMD_ARGS
+              value: "--timeout 120 --workers 1"
+          ports:
+            - containerPort: 5000
+              name: http
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            failureThreshold: 5
+          volumeMounts:
+            - name: mlflow-storage
+              mountPath: /mlflow
+      volumes:
+        - name: mlflow-storage
+          persistentVolumeClaim:
+            claimName: mlflow-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mlflow-server
+  namespace: cnn-classifier
+  labels:
+    app: mlflow-server
+spec:
+  type: NodePort
+  selector:
+    app: mlflow-server
+  ports:
+    - name: http
+      protocol: TCP
+      port: 5000
+      targetPort: 5000
+      nodePort: 30500
