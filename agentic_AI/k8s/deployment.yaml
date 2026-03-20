@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agentic-ai
+  namespace: default
+  labels:
+    app: agentic-ai
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: agentic-ai
+  template:
+    metadata:
+      labels:
+        app: agentic-ai
+    spec:
+      containers:
+        - name: agentic-ai
+          image: agentic-ai:latest
+          # Never pull from a remote registry; use the image built inside
+          # Minikube's Docker daemon (set via `eval $(minikube docker-env)`).
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8000
+              name: http
+
+          env:
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: agentic-ai-secrets
+                  key: openai-api-key
+
+            - name: PDF_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: agentic-ai-config
+                  key: pdf-path
+
+            - name: CHROMA_PERSIST_DIR
+              valueFrom:
+                configMapKeyRef:
+                  name: agentic-ai-config
+                  key: chroma-persist-dir
+
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+            limits:
+              memory: "1.5Gi"
+              cpu: "1500m"
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            failureThreshold: 3
+
+          # Persistent storage for ChromaDB (survives pod restarts)
+          volumeMounts:
+            - name: chroma-storage
+              mountPath: /app/chroma_db
+
+      volumes:
+        - name: chroma-storage
+          emptyDir: {}
+          # To persist ChromaDB across pod restarts, replace emptyDir with
+          # a PersistentVolumeClaim (see the commented block below).
+          #
+          # persistentVolumeClaim:
+          #   claimName: chroma-pvc

@@ -1,0 +1,23 @@
+# LangGraph / LangChain core
+langgraph
+langchain
+langchain-openai
+langchain-community
+langchain-chroma
+
+# Vector store
+chromadb
+langchain-text-splitters
+
+# PDF loading (for RAG agent)
+pypdf
+
+# Web framework
+fastapi
+uvicorn[standard]
+
+# Environment / config
+python-dotenv
+
+# Utilities (standard library – listed here for clarity, not installation)
+# typing  ← already in stdlib; no need to pip-install

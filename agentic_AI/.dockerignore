@@ -1,0 +1,39 @@
+# Version control
+.git
+.gitignore
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+
+# Environment files (secrets must not enter the image)
+.env
+.env.*
+!.env.example
+
+# ChromaDB local data (large, should be mounted as a volume)
+chroma.sqlite3
+Agents/152e59cb-e683-42de-bd8d-04b6e9356d66/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+Exercises/
+Graphs/
+
+# Logs and temporary files
+*.log
+logging.txt
+*.txt
+!requirements.txt
+
+# Test / IDE artefacts
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.vscode/
+.idea/
