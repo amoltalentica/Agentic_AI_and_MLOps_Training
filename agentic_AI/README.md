@@ -58,7 +58,7 @@ The Stock Market Performance 2024 PDF (used by the RAG agent) is **bundled insid
 │  │  │  ├── /api/drafter/chat     → Drafter Agent │  │   │
 │  │  │  └── /api/rag/query        → RAG Agent     │  │   │
 │  │  │                                            │  │   │
-│  │  │  Env: OPENAI_API_KEY (from Secret)         │  │   │
+  │  │  Env: GOOGLE_API_KEY (from Secret)          │  │   │
 │  │  │  Env: PDF_PATH, CHROMA_PERSIST_DIR         │  │   │
 │  │  │       (from ConfigMap)                     │  │   │
 │  │  └────────────────────────────────────────────┘  │   │
@@ -73,7 +73,7 @@ The Stock Market Performance 2024 PDF (used by the RAG agent) is **bundled insid
 ```
 
 **Request flow:**  
-`curl / browser` → `port-forward (8080)` → `Service (:80)` → `Pod (:8000)` → `FastAPI route` → `LangGraph agent` → `OpenAI API`
+`curl / browser` → `port-forward (8080)` → `Service (:80)` → `Pod (:8000)` → `FastAPI route` → `LangGraph agent` → `Google Gemini API`
 
 ---
 
@@ -81,11 +81,11 @@ The Stock Market Performance 2024 PDF (used by the RAG agent) is **bundled insid
 
 | Agent | Endpoint | Description | State |
 |---|---|---|---|
-| **Agent Bot** | `POST /api/agent-bot/chat` | Single-turn GPT-4o chatbot | Stateless |
+| **Agent Bot** | `POST /api/agent-bot/chat` | Single-turn Gemini chatbot | Stateless |
 | **Memory Agent** | `POST /api/memory/chat` | Multi-turn chat with full conversation history | Session-based |
 | **ReAct Agent** | `POST /api/react/solve` | Solves math queries using add / subtract / multiply tools | Stateless |
 | **Drafter Agent** | `POST /api/drafter/chat` | Iteratively writes and saves documents via LLM tool calls | Session-based |
-| **RAG Agent** | `POST /api/rag/query` | Answers questions about the Stock Market 2024 PDF using ChromaDB retrieval | Stateless |
+| **RAG Agent** | `POST /api/rag/query` | Answers questions about the Stock Market 2024 PDF using ChromaDB + Gemini embeddings retrieval | Stateless |
 
 ### How LangGraph Powers Each Agent
 
@@ -137,7 +137,7 @@ agentic_AI/
 | Docker | https://docs.docker.com/engine/install/ |
 | Minikube | https://minikube.sigs.k8s.io/docs/start/ |
 | kubectl | https://kubernetes.io/docs/tasks/tools/ |
-| OpenAI API key | https://platform.openai.com/api-keys |
+| Google Gemini API key | https://aistudio.google.com/apikey (free tier available) |
 
 ---
 
@@ -149,11 +149,13 @@ agentic_AI/
 cd agentic_AI
 ```
 
-### Step 2 — Add your OpenAI API key
+### Step 2 — Add your Google Gemini API key
 
 ```bash
-echo 'OPENAI_API_KEY=sk-proj-your-real-key-here' > .env
+echo 'GOOGLE_API_KEY=AIzaSy-your-real-key-here' > .env
 ```
+
+> Get a free Gemini API key at https://aistudio.google.com/apikey
 
 ### Step 3 — Run the deploy script (does everything automatically)
 
@@ -373,9 +375,9 @@ kubectl describe pod -l app=agentic-ai
 kubectl port-forward service/agentic-ai-service 8080:80 &
 
 # Update API key and restart
-export OPENAI_API_KEY="sk-..."
+export GOOGLE_API_KEY="AIzaSy-..."
 kubectl create secret generic agentic-ai-secrets \
-    --from-literal=openai-api-key="$OPENAI_API_KEY" \
+    --from-literal=google-api-key="$GOOGLE_API_KEY" \
     --dry-run=client -o yaml | kubectl apply -f -
 kubectl rollout restart deployment/agentic-ai
 kubectl rollout status deployment/agentic-ai
@@ -404,7 +406,7 @@ Core dependencies (`requirements.txt`):
 ```
 langgraph
 langchain
-langchain-openai
+langchain-google-genai
 langchain-community
 langchain-chroma
 chromadb
@@ -416,12 +418,53 @@ python-dotenv
 
 Install locally (for development without Docker):
 ```bash
+# Create a virtual environment (required on Ubuntu/Debian systems)
+python3 -m venv venv
+source venv/bin/activate   # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-Run locally (without Docker):
+### Run the RAG Agent locally (CLI mode)
+
 ```bash
-python app.py
+# Set up your .env file first
+echo 'GOOGLE_API_KEY=AIzaSy-your-key-here' > .env
+echo 'PDF_PATH=Agents/Stock_Market_Performance_2024.pdf' >> .env
+echo 'CHROMA_PERSIST_DIR=Agents/chroma_db' >> .env
+
+# Run the interactive agent
+venv/bin/python Agents/RAG_Agent.py
+```
+
+You will see:
+```
+PDF has been loaded and has 9 pages
+Created ChromaDB vector store!
+
+=== RAG AGENT===
+
+What is your question: What stocks performed best in 2024?
+Calling Tool: retriever_tool with query: best performing stocks in 2024
+Result length: 4831
+Tools Execution Complete. Back to the model!
+
+=== ANSWER ===
+In 2024, Palantir Technologies (PLTR) was the single best-performing stock...
+```
+
+Type `quit` or `exit` to stop the agent.
+
+### Run the full API locally
+
+```bash
+venv/bin/python app.py
 # API available at http://localhost:8000
 ```
+
+### LLM & Embedding Models Used
+
+| Component | Model |
+|---|---|
+| Chat / Reasoning | `gemini-2.5-flash` |
+| Embeddings (RAG) | `models/gemini-embedding-001` |
 

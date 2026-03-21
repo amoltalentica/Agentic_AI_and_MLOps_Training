@@ -1,7 +1,7 @@
 # LangGraph / LangChain core
 langgraph
 langchain
-langchain-openai
+langchain-google-genai
 langchain-community
 langchain-chroma
 
