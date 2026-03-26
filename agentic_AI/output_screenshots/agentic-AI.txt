@@ -1,0 +1,150 @@
+amol@amolt2-win:~/kra-assignments/mlops_assignments/Agentic_AI_and_MLOps_Training/agentic_AI$ venv/bin/python Agents/RAG_Agent.py
+PDF has been loaded and has 9 pages
+Created ChromaDB vector store!
+
+=== RAG AGENT===
+
+What is your question: What was the S&P 500 return in 2024?
+Calling Tool: retriever_tool with query: S&P 500 return in 2024
+Result length: 4861
+Tools Execution Complete. Back to the model!
+
+=== ANSWER ===
+[{'type': 'text', 'text': 'The S&P 500 index delivered roughly a 25% total return in 2024 (around +23% in price terms).\n\n(Source: Document 1, Document 2, Document 3, Document 4)', 'extras': {'signature': 'CtACAb4+9vtVQhVz9o0fnrm3TfyFu74O6mgHEciZRVXpy2NEYBlTFXj6yc+Fwnz7s9yjQxWHR9iggD0Mc7+jg16eZnI3FGKQu91NcNRLUt+PfB0cA11s3P3+OWFmD9e32aDvef8RY7LE5rCc3pRaCLSUtaZ2xH4XD2aLwVI5sV3BCNL5SI9wHU7fhSHNuWe8fPD7Q9ogjFMowVTm9veWOknwN1vG7FtgO9KSiUp39zJt/pM+amT08DKGpwVkTEegJbCYy50YuWjoR2nNBt7lh1SvXHbOaNtVinnRmWhW7auyrji9ZOEU53DuikDj+5mFHk/h9nFB/HZGWdCAvCFCLGL19cV4D5OLf4Gk7+x4FkUu/El6PW2kvHA1VJmeRg4ClGFn44ExAKWpyHgpIPKh+0SInbAGlmZbAlhZtEr/UuJ6/1ukRWIZPfn4sycSC36sqRtd'}}]
+
+What is your question: Give me a summary of the stock market trends
+Calling Tool: retriever_tool with query: summary of stock market trends
+Result length: 4833
+Tools Execution Complete. Back to the model!
+
+=== ANSWER ===
+[{'type': 'text', 'text': 'The year 2024 was exceptionally strong for equities, continuing the robust gains from the previous year. The S&P 500 index saw a total return of approximately 25%, marking the second consecutive year of over 20% returns, a trend not observed since the late 1990s. The tech-heavy Nasdaq Composite outperformed the broader market with a nearly 29% jump. (Documents 1, 2, 3, 4, 5)\n\nHowever, the rally was not evenly distributed; smaller-cap stocks, such as those in the S&P 500 Equal-Weight index and the Russell 2000, experienced more modest gains of about 10-11%. A significant trend was the dominance of mega-cap technology stocks, often referred to as the "Magnificent 7" (Apple, Microsoft, Alphabet, Amazon, Meta). (Documents 1, 2, 3, 4)\n\nInvestors particularly favored companies with strong growth narratives, especially those linked to transformative technological trends like artificial intelligence, cloud computing, and quantum technology. This surge in stock prices resulted in significantly increased valuations, with many leading stocks trading at high multiples by year-end, reflecting considerable optimism for future growth. (Document 5)', 'extras': {'signature': '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'}}]
+
+What is your question: which stocks perform best in 2024?
+Calling Tool: retriever_tool with query: best performing stocks in 2024
+Result length: 4903
+Tools Execution Complete. Back to the model!
+
+=== ANSWER ===
+[{'type': 'text', 'text': "In 2024, **Meta Platforms (Facebook) (META)** was one of the standout performers, with its stock price skyrocketing about 72% during the year, making it one of the best-performing large-cap stocks. (Documents 1, 2, 3, 4, 5)\n\n**Tesla, Inc. (TSLA)** also delivered strong gains, with its share price ending the year up approximately 63%. (Document 5)\n\n**Amazon's** stock also saw a return to form in 2024, recouping a substantial portion of the market value it had lost in the prior year. (Documents 1, 2, 3, 4)", 'extras': {'signature': 'Ct8HAb4+9vu1/M+ao9owKmMHNOt+Afkt29ipa+QrCsND69Dj5DkT4Yz1V6S0cVobRuGs+aQgCipEmKlPLEIvlPjpgH0RErGl8pjAtCdQX4YGOwtQHMJbEMRvnur+VzWsDPdZgiwQy/z4zDso9lWbME6cn2+NmLp1wW/3wiBmi3jDONQBmbzi/TOT2G+LAL2GakyHGSN2np01X7dpJ6INeD5KE45dpRTOPvl2qznoiks0TuMw+fGrsBPX+e4SJLSiio0dwjyL3nAc39ntclV0J1/xdU6oULllP28rn2eruO5L6FknJFSCa0lY1NO9x1qCU0qzbbgH+sIDj+JNPZP7BInM0EWVFM8+rhinl044ZR/sZ5q6gdXU0XSosqx1WAS1w8DQ3/rZP4RulvL+Eudr5q/o/t/Izn8y5DNnR4NqChMZRiurl6DdDbkkRPW93IUxtyPmQFoAeQyubjX6/7CbqW6Cnms+PWhrpfK+ieWOjbW8sgHFDjSuFXENQrNDm81coJkRPJWoTm84+O451frCSBxZbF2e6AXCuH45FBw0Ms5MuMnLHLlOvHEve4oiDzq4lCqc+rpiVreFdPrAQy3fU/7mSU8qkWdpv7c3sjtD52N/WnwJe7841JrMao1McaMUJaTdnyRVBDdUS4oqwQ8E3UMzh2M+PGY+9IVdN1qmMcjmfKiLF7MVfcBdC90akI5hQC9GXlOE21eYnK96dm1YMk+tWWWSUYHvT71DZ84zjaHrzccKOwjYAQcuYh4d+HkjT/zdIUQ3IOWJzkuC6IB+gxMgJX4sRIM7/tH1OSAQEiYrQM6XyyBrC888OU1MmxiBVvDtWI40IBm0gAUuocqcuO/yPkJzGvtG9IW2bhZDXB+pO8YzenlLkT6V7yRqgGUDJ3OqhdEU43aHFLH+SMZTkdiWQYYmbXyxl5prTKeFePcGpF8LNvfScBl8qxUe/tIjb4YJr1uny43b1i68J/toU2CcsdXRt/LCYqaoZGLaVzqJ5ZsSXnbrjVcq7qfdXjITJCTb95onI5n1L/bugaMRSBLQl7vfC6gn1dQ6/Y9sXs0Ougxq3vXNhhKDkqk8JdpUIiCnxYwKI6SOzYIVX+KdydjcPo/06R4vtwqz5amXs7Xsv0j7PFXHususN6G1sNW7vryGL68yTQl8StGaUoy0u0xbaaX4ph8fVk71l9/eArVAJPA5NSjHNX7U9PV67SP7wwnC4AdwvaJFrBm94XQ8yCUzPMgTP6FNlsHfyZc8zJZEYsv9ZogQ/h4o7V3VPRFybzYhfM7aeprfbQXvXRj5+qbmEkl9LZtyBa6ap0EHh2/nyA=='}}]
+
+
+
+amol@amolt2-win:~/kra-assignments/mlops_assignments/Agentic_AI_and_MLOps_Training/agentic_AI/scripts$ bash test_api.sh
+
+Agentic AI — API Test Suite
+Target: http://localhost:8080
+────────────────────────────────────────────────────
+
+━━━  1. Infrastructure  ━━━
+
+  [ GET /health ]
+  ✔ PASS  HTTP 200
+  ✔ PASS  Field 'status' contains 'healthy'
+  ✔ PASS  Field 'service' contains 'Agentic AI API'
+
+  [ GET / ]
+  ✔ PASS  HTTP 200
+  ✔ PASS  Field 'version' contains '1.0.0'
+  ✔ PASS  JSON key 'agents' present
+
+━━━  2. Agent Bot  (stateless single-turn chatbot)  ━━━
+
+  [ POST /api/agent-bot/chat — basic message ]
+  ✘ FAIL  HTTP 500 (expected 200) — body: {"detail":"Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.ope
+  ✘ FAIL  JSON key 'response' missing — body: {"detail":"Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.ope
+  ✘ FAIL  JSON key 'session_id' missing — body: {"detail":"Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.ope
+     LLM replied:
+
+  [ POST /api/agent-bot/chat — verify stateless (no memory) ]
+  ✘ FAIL  HTTP 500 (expected 200) — body: {"detail":"Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.ope
+  ✘ FAIL  JSON key 'response' missing — body: {"detail":"Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.ope
+     LLM replied:
+
+━━━  3. Memory Agent  (multi-turn chat with session history)  ━━━
+
+  [ POST /api/memory/chat — first turn, no session_id ]
+  ✘ FAIL  HTTP 500 (expected 200) — body: {"detail":"Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.ope
+  ✘ FAIL  JSON key 'session_id' missing — body: {"detail":"Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.ope
+  ✘ FAIL  JSON key 'response' missing — body: {"detail":"Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.ope
+     Session ID:
+
+  [ POST /api/memory/chat — second turn, reuse session ]
+  ✘ FAIL  HTTP 500 (expected 200) — body: {"detail":"Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.ope
+     LLM replied:
+  ✘ FAIL  Memory not retained — '42' not found in reply
+
+  [ GET /api/memory/sessions/:id — retrieve history ]
+  ✘ FAIL  HTTP 404 (expected 200) — body: {"detail":"Not Found"}
+  ✘ FAIL  JSON key 'history' missing — body: {"detail":"Not Found"}
+     History length: 0 messages
+  ✘ FAIL  History too short: 0 messages
+
+  [ DELETE /api/memory/sessions/:id — clear session ]
+  ✘ FAIL  HTTP 404 (expected 200) — body: {"detail":"Not Found"}
+
+━━━  4. ReAct Agent  (math tool agent)  ━━━
+
+  [ POST /api/react/solve — addition ]
+  ✘ FAIL  HTTP 500 (expected 200) — body: {"detail":"Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.ope
+  ✘ FAIL  JSON key 'result' missing — body: {"detail":"Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.ope
+     LLM replied:
+  ✘ FAIL  ReAct result did not contain '42':
+
+  [ POST /api/react/solve — chained operations ]
+  ✘ FAIL  HTTP 500 (expected 200) — body: {"detail":"Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.ope
+     LLM replied:
+  ✘ FAIL  Chained result did not contain '45':
+
+━━━  5. Drafter Agent  (session-based document drafting)  ━━━
+
+  [ POST /api/drafter/chat — create document ]
+  ✘ FAIL  HTTP 500 (expected 200) — body: {"detail":"Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.ope
+  ✘ FAIL  JSON key 'session_id' missing — body: {"detail":"Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.ope
+  ✘ FAIL  JSON key 'document_content' missing — body: {"detail":"Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.ope
+  ✘ FAIL  JSON key 'response' missing — body: {"detail":"Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.ope
+     Session ID:
+     Doc preview: ...
+  ✘ FAIL  Document content is empty after creation
+
+  [ POST /api/drafter/chat — append to document ]
+  ✘ FAIL  HTTP 500 (expected 200) — body: {"detail":"Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.ope
+     Updated doc length: 0 chars
+  ⚠ SKIP  Document length unchanged — may still be correct
+
+  [ POST /api/drafter/chat — save document ]
+  ✘ FAIL  HTTP 500 (expected 200) — body: {"detail":"Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.ope
+     is_saved: False
+  ⚠ SKIP  is_saved=false — agent may have returned a summary instead of calling save tool
+
+  [ DELETE /api/drafter/sessions/:id — cleanup ]
+  ✘ FAIL  HTTP 404 (expected 200) — body: {"detail":"Not Found"}
+
+━━━  6. RAG Agent  (PDF Q&A — Stock Market 2024)  ━━━
+
+  [ POST /api/rag/query — check availability ]
+  ⚠ SKIP  RAG agent unavailable (503) — PDF may not be found in container. Check PDF_PATH env var.
+
+━━━  7. Error handling  ━━━
+
+  [ POST /api/agent-bot/chat — empty message (should still return 200) ]
+     HTTP 500 (200 or 422 are both acceptable)
+  ✘ FAIL  Unexpected HTTP 500 for empty message
+
+  [ GET /api/memory/sessions/nonexistent-id — 404 expected ]
+  ✔ PASS  HTTP 404
+
+════════════════════════════════════════════════════
+  Test Summary
+────────────────────────────────────────────────────
+  Total  : 38
+  Passed : 7
+  Failed : 28
+  Skipped: 3
+════════════════════════════════════════════════════
+
+Some tests failed. Common causes:
+  • OpenAI API key has insufficient quota (add credits at platform.openai.com/billing)
+  • Port-forward not running — run: kubectl port-forward service/agentic-ai-service 8080:80 &
+  • Pod not ready — run: kubectl get pods -l app=agentic-ai
+amol@amolt2-win:~/kra-assignments/mlops_assignments/Agentic_AI_and_MLOps_Training/agentic_AI/scripts$
